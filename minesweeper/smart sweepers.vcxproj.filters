@@ -108,12 +108,6 @@
     <ClCompile Include="CBackPropController.cpp">
       <Filter>Source Files\Prac Controllers</Filter>
     </ClCompile>
-    <ClCompile Include="CBasicEA.cpp">
-      <Filter>Source Files\Neural Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="CEAController.cpp">
-      <Filter>Source Files\Prac Controllers</Filter>
-    </ClCompile>
     <ClCompile Include="CQLearningController.cpp">
       <Filter>Source Files\Prac Controllers</Filter>
     </ClCompile>
@@ -165,12 +159,6 @@
       <Filter>Header Files\Neural utils</Filter>
     </ClInclude>
     <ClInclude Include="CBackPropController.h">
-      <Filter>Header Files\Prac Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="CBasicEA.h">
-      <Filter>Header Files\Neural utils</Filter>
-    </ClInclude>
-    <ClInclude Include="CEAController.h">
       <Filter>Header Files\Prac Controllers</Filter>
     </ClInclude>
     <ClInclude Include="CQLearningController.h">

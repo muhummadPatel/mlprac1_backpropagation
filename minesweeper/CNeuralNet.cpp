@@ -26,18 +26,21 @@ CNeuralNet::CNeuralNet(uint inputLayerSize, uint hiddenLayerSize, uint outputLay
 {
 	//TODO
 }
+
 /**
  The destructor of the class. All allocated memory will be released here
 */
 CNeuralNet::~CNeuralNet() {
 	//TODO
 }
+
 /**
  Method to initialize the both layers of weights to random numbers
 */
 void CNeuralNet::initWeights(){
 	//TODO
 }
+
 /**
  This is the forward feeding part of back propagation.
  1. This should take the input and copy the memory (use memcpy / std::copy)
@@ -49,6 +52,7 @@ void CNeuralNet::initWeights(){
 void CNeuralNet::feedForward(const double * const inputs) {
 	  //TODO
 }
+
 /**
  This is the actual back propagation part of the back propagation algorithm
  It should be executed after feeding forward. Given a vector of desired outputs
@@ -70,6 +74,7 @@ void CNeuralNet::feedForward(const double * const inputs) {
 void CNeuralNet::propagateErrorBackward(const double * const desiredOutput){
 	//TODO
 }
+
 /**
 This computes the mean squared error
 A very handy formula to test numeric output with. You may want to commit this one to memory
@@ -84,6 +89,7 @@ double CNeuralNet::meanSquaredError(const double * const desiredOutput){
 	*/
 	return 1;
 }
+
 /**
 This trains the neural network according to the back propagation algorithm.
 The primary steps are:
@@ -96,6 +102,7 @@ void CNeuralNet::train(const double** const inputs,
 		const double** const outputs, uint trainingSetSize) {
 	//TODO
 }
+
 /**
 Once our network is trained we can simply feed it some input though the feed forward
 method and take the maximum value as the classification
@@ -103,6 +110,7 @@ method and take the maximum value as the classification
 uint CNeuralNet::classify(const double * const input){
 	return 1; //TODO: fix me
 }
+
 /**
 Gets the output at the specified index
 */

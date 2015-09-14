@@ -130,7 +130,6 @@
   <ItemGroup>
     <ClCompile Include="C2DMatrix.cpp" />
     <ClCompile Include="CBackPropController.cpp" />
-    <ClCompile Include="CBasicEA.cpp" />
     <ClCompile Include="CCollisionObject.cpp" />
     <ClCompile Include="CContCollisionObject.cpp" />
     <ClCompile Include="CContController.cpp" />
@@ -139,7 +138,6 @@
     <ClCompile Include="CDiscCollisionObject.cpp" />
     <ClCompile Include="CDiscController.cpp" />
     <ClCompile Include="CDiscMinesweeper.cpp" />
-    <ClCompile Include="CEAController.cpp" />
     <ClCompile Include="CNeuralNet.cpp" />
     <ClCompile Include="CParams.cpp" />
     <ClCompile Include="CQLearningController.cpp" />
@@ -151,7 +149,6 @@
   <ItemGroup>
     <ClInclude Include="C2DMatrix.h" />
     <ClInclude Include="CBackPropController.h" />
-    <ClInclude Include="CBasicEA.h" />
     <ClInclude Include="CCollisionObject.h" />
     <ClInclude Include="CContController.h" />
     <ClInclude Include="CController.h" />
@@ -160,7 +157,6 @@
     <ClInclude Include="CDiscCollisionObject.h" />
     <ClInclude Include="CDiscController.h" />
     <ClInclude Include="CDiscMinesweeper.h" />
-    <ClInclude Include="CEAController.h" />
     <ClInclude Include="CNeuralNet.h" />
     <ClInclude Include="CParams.h" />
     <ClInclude Include="CQLearningController.h" />
