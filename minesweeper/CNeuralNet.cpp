@@ -15,7 +15,7 @@
  */
 
 #include <stdlib.h>     /* srand, rand */
-#include <time.h> 
+#include <math.h>		/* exp */
 
 #include "CNeuralNet.h"
 
@@ -46,6 +46,8 @@ mse_cutoff(mse_cutoff)
 	}
 
 	initWeights(); //REMOOOOVVVEEEE
+	std::vector<double> temp = { 1, 1 }; //REMOOOOOVE
+	feedForward(temp); //REMOOOOOVE
 }
 
 /**
@@ -84,6 +86,11 @@ void CNeuralNet::initWeights(){
 	}
 }
 
+
+double sigmoid(double t){
+	return (1.0) / (1.0 + exp(-1 * t));
+}
+
 /**
  This is the forward feeding part of back propagation.
  1. This should take the input and copy the memory (use memcpy / std::copy)
@@ -93,7 +100,38 @@ void CNeuralNet::initWeights(){
  3. Repeat step 2, but this time compute the output at the output layer
 */
 void CNeuralNet::feedForward(const std::vector<double> inputs) {
-	  //TODO
+	//TODO
+
+	//get the result of the input layer
+	std::vector<double> _input;
+	_input.resize(inputs.size());
+	std::copy(inputs.begin(), inputs.end(), _input.begin());
+
+	//push inputs' result through the hidden layer to get the _hidden result
+	std::vector<double> _hidden;
+	for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
+		double sum = 0;
+		for (uint inputNode = 0; inputNode < inputLayerSize; inputNode++) {
+			sum += input_to_hidden[inputNode][hiddenNode] * _input[inputNode];
+		}
+
+		_hidden.push_back(sigmoid(sum));
+	}
+
+	//push _hidden result through the output layer to get the _output result
+	std::vector<double> _output;
+	for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
+		double sum = 0;
+		for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
+			sum += hidden_to_output[hiddenNode][outputNode] * _hidden[hiddenNode];
+		}
+
+		_output.push_back(sigmoid(sum));
+	}
+
+	/*for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
+		printf("result at outputNode%d = %f\n", outputNode, _output[outputNode]);
+	}*/
 }
 
 /**
