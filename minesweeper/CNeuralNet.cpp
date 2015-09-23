@@ -91,6 +91,10 @@ double sigmoid(double t){
 	return (1.0) / (1.0 + exp(-1 * t));
 }
 
+double sigmoid_d(double t){
+	return sigmoid(t) * (1.0 - sigmoid(t));
+}
+
 /**
  This is the forward feeding part of back propagation.
  1. This should take the input and copy the memory (use memcpy / std::copy)
@@ -102,13 +106,16 @@ double sigmoid(double t){
 void CNeuralNet::feedForward(const std::vector<double> inputs) {
 	//TODO
 
+	//reset all the output vectors
+	_input.clear();
+	_hidden.clear();
+	_output.clear();
+
 	//get the result of the input layer
-	std::vector<double> _input;
 	_input.resize(inputs.size());
 	std::copy(inputs.begin(), inputs.end(), _input.begin());
 
 	//push inputs' result through the hidden layer to get the _hidden result
-	std::vector<double> _hidden;
 	for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
 		double sum = 0;
 		for (uint inputNode = 0; inputNode < inputLayerSize; inputNode++) {
@@ -119,7 +126,6 @@ void CNeuralNet::feedForward(const std::vector<double> inputs) {
 	}
 
 	//push _hidden result through the output layer to get the _output result
-	std::vector<double> _output;
 	for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
 		double sum = 0;
 		for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
@@ -133,6 +139,8 @@ void CNeuralNet::feedForward(const std::vector<double> inputs) {
 		printf("result at outputNode%d = %f\n", outputNode, _output[outputNode]);
 	}*/
 }
+
+
 
 /**
  This is the actual back propagation part of the back propagation algorithm
@@ -154,6 +162,33 @@ void CNeuralNet::feedForward(const std::vector<double> inputs) {
 */
 void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput){
 	//TODO
+
+	//compute the error at the output layer
+	std::vector<double> _output_err;
+	for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
+		double o = _output[outputNode];
+		double t = desiredOutput[outputNode];
+
+		double error = sigmoid_d(o) * (t - o);
+		_output_err.push_back(error);
+	}
+
+	//compute the error at the hidden layer
+	std::vector<double> _hidden_err;
+	for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
+		double sum = 0;
+		for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
+			sum += hidden_to_output[hiddenNode][outputNode] * _output_err[outputNode];
+		}
+
+		double o = _hidden[hiddenNode];
+		double error = sigmoid_d(o) * sum;
+		_hidden_err.push_back(error);
+	}
+
+	//TODO: adjust hidden_to_output weights
+
+	//TODO: adjust input_to_hidden weights
 }
 
 /**

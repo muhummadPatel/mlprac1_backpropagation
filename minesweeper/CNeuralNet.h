@@ -26,8 +26,12 @@ protected:
 	double lRate;
 	double mse_cutoff;
 
-	std::vector<std::vector<double> > input_to_hidden;
-	std::vector<std::vector<double> > hidden_to_output;
+	std::vector<std::vector<double> > input_to_hidden; //input to hidden layer weights
+	std::vector<std::vector<double> > hidden_to_output; //hidden to output layer weights
+
+	std::vector<double> _input; //output of the input layer
+	std::vector<double> _hidden; //output of the hidden layer
+	std::vector<double> _output; //output of the output layer
 protected:
 	void feedForward(const std::vector<double> inputs); //you may modify this to do std::vector<double> if you want
 	void propagateErrorBackward(const std::vector<double> desiredOutput); //you may modify this to do std::vector<double> if you want
