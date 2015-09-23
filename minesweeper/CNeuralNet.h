@@ -20,6 +20,15 @@ typedef unsigned int uint;
 
 class CNeuralNet {
 protected:
+	uint inputLayerSize;
+	uint hiddenLayerSize;
+	uint outputLayerSize;
+	double lRate;
+	double mse_cutoff;
+
+	std::vector<std::vector<double> > input_to_hidden;
+	std::vector<std::vector<double> > hidden_to_output;
+protected:
 	void feedForward(const std::vector<double> inputs); //you may modify this to do std::vector<double> if you want
 	void propagateErrorBackward(const std::vector<double> desiredOutput); //you may modify this to do std::vector<double> if you want
 	double meanSquaredError(const std::vector<double> desiredOutput); //you may modify this to do std::vector<double> if you want

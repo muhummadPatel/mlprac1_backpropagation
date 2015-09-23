@@ -14,6 +14,9 @@
  Artificial Intelligence - A Modern Approach.
  */
 
+#include <stdlib.h>     /* srand, rand */
+#include <time.h> 
+
 #include "CNeuralNet.h"
 
 /**
@@ -21,10 +24,25 @@
  for the weights of both input->hidden and hidden->output layers, as well as the input, hidden
  and output layers.
 */
-CNeuralNet::CNeuralNet(uint inputLayerSize, uint hiddenLayerSize, uint outputLayerSize, double lRate, double mse_cutoff)
+CNeuralNet::CNeuralNet(uint inputLayerSize, uint hiddenLayerSize, uint outputLayerSize, double lRate, double mse_cutoff) :
+inputLayerSize(inputLayerSize),
+hiddenLayerSize(hiddenLayerSize),
+outputLayerSize(outputLayerSize),
+lRate(lRate),
+mse_cutoff(mse_cutoff)
 	//you probably want to use an initializer list here
 {
 	//TODO
+
+	//allocate space for input_to_hidden weights
+	for (uint i = 0; i < inputLayerSize; i++){
+		input_to_hidden.push_back(std::vector<double>());
+	}
+
+	//allocate space for hidden_to_output weights
+	for (uint i = 0; i < hiddenLayerSize; i++){
+		hidden_to_output.push_back(std::vector<double>());
+	}
 }
 
 /**
@@ -32,6 +50,10 @@ CNeuralNet::CNeuralNet(uint inputLayerSize, uint hiddenLayerSize, uint outputLay
 */
 CNeuralNet::~CNeuralNet() {
 	//TODO
+}
+
+int getRandomWeight(){
+	return -0.5 + ((double)rand() / (double)RAND_MAX);
 }
 
 /**
