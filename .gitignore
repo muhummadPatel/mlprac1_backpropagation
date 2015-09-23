@@ -1,2 +1,7 @@
 *.o
 minesweeper/Debug/
+*.sdf
+_.swp
+*.opensdf
+*.suo
+*v12.suo
