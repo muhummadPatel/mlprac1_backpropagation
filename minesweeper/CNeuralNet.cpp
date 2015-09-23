@@ -33,6 +33,7 @@ mse_cutoff(mse_cutoff)
 	//you probably want to use an initializer list here
 {
 	//TODO
+	printf("PARAMS::: %d %d %d\n", inputLayerSize, hiddenLayerSize, outputLayerSize);
 
 	//allocate space for input_to_hidden weights
 	for (uint i = 0; i < inputLayerSize; i++){
@@ -43,6 +44,8 @@ mse_cutoff(mse_cutoff)
 	for (uint i = 0; i < hiddenLayerSize; i++){
 		hidden_to_output.push_back(std::vector<double>());
 	}
+
+	initWeights(); //REMOOOOVVVEEEE
 }
 
 /**
@@ -52,7 +55,7 @@ CNeuralNet::~CNeuralNet() {
 	//TODO
 }
 
-int getRandomWeight(){
+double getRandomWeight(){
 	return -0.5 + ((double)rand() / (double)RAND_MAX);
 }
 
@@ -61,6 +64,24 @@ int getRandomWeight(){
 */
 void CNeuralNet::initWeights(){
 	//TODO
+
+	//initialize input_to_hidden weights
+	//input_to_hidden[inputNode][hiddenNode]
+	for (uint inputNode = 0; inputNode < inputLayerSize; inputNode++){
+		for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++){
+			input_to_hidden[inputNode].push_back(getRandomWeight());
+			//printf("inputNode%d to hiddenNode%d = %f\n", inputNode, hiddenNode, input_to_hidden[inputNode][hiddenNode]);
+		}
+	}
+
+	//initialize hidden_to_output weights
+	//hidden_to_output[hiddenNode][outputNode]
+	for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++){
+		for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++){
+			hidden_to_output[hiddenNode].push_back(getRandomWeight());
+			//printf("hiddenNode%d to outputNode%d = %f\n", hiddenNode, outputNode, hidden_to_output[hiddenNode][outputNode]);
+		}
+	}
 }
 
 /**
