@@ -20,14 +20,14 @@ typedef unsigned int uint;
 
 class CNeuralNet {
 protected:
-	void feedForward(const double * const inputs); //you may modify this to do std::vector<double> if you want
-	void propagateErrorBackward(const double * const desiredOutput); //you may modify this to do std::vector<double> if you want
-	double meanSquaredError(const double * const desiredOutput); //you may modify this to do std::vector<double> if you want
+	void feedForward(const std::vector<double> inputs); //you may modify this to do std::vector<double> if you want
+	void propagateErrorBackward(const std::vector<double> desiredOutput); //you may modify this to do std::vector<double> if you want
+	double meanSquaredError(const std::vector<double> desiredOutput); //you may modify this to do std::vector<double> if you want
 public:
 	CNeuralNet(uint inputLayerSize, uint hiddenLayerSize, uint outputLayerSize, double lRate, double mse_cutoff);
 	void initWeights();
-	void train(const double ** const inputs,const double ** const outputs, uint trainingSetSize); //you may modify this to do std::vector<std::vector<double> > or do boost multiarray or something else if you want
-	uint classify(const double * const input); //you may modify this to do std::vector<double> if you want
+	void train(const std::vector<std::vector<double> > inputs, const std::vector<std::vector<double> > outputs, uint trainingSetSize); //you may modify this to do std::vector<std::vector<double> > or do boost multiarray or something else if you want
+	uint classify(const std::vector<double> input); //you may modify this to do std::vector<double> if you want
 	double getOutput(uint index) const;
 	virtual ~CNeuralNet();
 };

@@ -49,7 +49,7 @@ void CNeuralNet::initWeights(){
  (each _hidden layer node = sigmoid (sum( _weights_h_i * _inputs)) //assume the network is completely connected
  3. Repeat step 2, but this time compute the output at the output layer
 */
-void CNeuralNet::feedForward(const double * const inputs) {
+void CNeuralNet::feedForward(const std::vector<double> inputs) {
 	  //TODO
 }
 
@@ -71,7 +71,7 @@ void CNeuralNet::feedForward(const double * const inputs) {
     for each connection between the input and hidden layers
  5. REMEMBER TO FREE ANY ALLOCATED MEMORY WHEN YOU'RE DONE (or use std::vector ;)
 */
-void CNeuralNet::propagateErrorBackward(const double * const desiredOutput){
+void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput){
 	//TODO
 }
 
@@ -79,7 +79,7 @@ void CNeuralNet::propagateErrorBackward(const double * const desiredOutput){
 This computes the mean squared error
 A very handy formula to test numeric output with. You may want to commit this one to memory
 */
-double CNeuralNet::meanSquaredError(const double * const desiredOutput){
+double CNeuralNet::meanSquaredError(const std::vector<double> desiredOutput){
 	/*TODO:
 	sum <- 0
 	for i in 0...outputLayerSize -1 do
@@ -98,8 +98,8 @@ for each training pattern:
   propagate backward
 until the MSE becomes suitably small
 */
-void CNeuralNet::train(const double** const inputs,
-		const double** const outputs, uint trainingSetSize) {
+void CNeuralNet::train(const std::vector<std::vector<double> > inputs,
+	const std::vector<std::vector<double> > outputs, uint trainingSetSize) {
 	//TODO
 }
 
@@ -107,7 +107,7 @@ void CNeuralNet::train(const double** const inputs,
 Once our network is trained we can simply feed it some input though the feed forward
 method and take the maximum value as the classification
 */
-uint CNeuralNet::classify(const double * const input){
+uint CNeuralNet::classify(const std::vector<double> input){
 	return 1; //TODO: fix me
 }
 
