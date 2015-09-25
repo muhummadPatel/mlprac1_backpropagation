@@ -254,7 +254,9 @@ void CNeuralNet::train(const std::vector<std::vector<double> > inputs,
 
 			error_sum += meanSquaredError(outputs[trainingExample]);
 		}
+
 		printf("Err:: %f %d\n", error_sum, trainingSetSize);
+		//error_sum /= trainingSetSize;
 	} while (error_sum > mse_cutoff);
 }
 
@@ -263,12 +265,15 @@ Once our network is trained we can simply feed it some input though the feed for
 method and take the maximum value as the classification
 */
 uint CNeuralNet::classify(const std::vector<double> input){
-	return 1; //TODO: fix me
+	//return 1; //TODO: fix me
+	feedForward(input);
+
+	return (_output[0] > _output[1]) ? 0 : 1;
 }
 
 /**
 Gets the output at the specified index
 */
 double CNeuralNet::getOutput(uint index) const{
-	return 0; //TODO: fix me
+	return _output[index]; //TODO: fix me
 }

@@ -51,13 +51,9 @@ void CBackPropController::InitializeLearningAlgorithm(void)
 		f >> no_hidden;
 		f >> no_out;
 
-		//REMOOOOOVVVVVEEEE
-		/*no_inputs = 2;
-		no_hidden = 2;
-		no_out = 2;*/
-
 		f >> learning_rate;
 		f >> mse_cutoff;
+
 		/*inp = new double*[no_training_samples];
 		out = new double*[no_training_samples];*/
 		for (uint32_t i = 0; i < no_training_samples; ++i){
