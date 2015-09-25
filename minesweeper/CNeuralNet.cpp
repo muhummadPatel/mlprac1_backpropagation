@@ -169,7 +169,7 @@ void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput)
 		double o = _output[outputNode];
 		double t = desiredOutput[outputNode];
 
-		double error = sigmoid_d(o) * (t - o);
+		double error = o * (1 - o) * (t - o);
 		_output_err.push_back(error);
 	}
 
@@ -182,7 +182,8 @@ void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput)
 		}
 
 		double o = _hidden[hiddenNode];
-		double error = sigmoid_d(o) * sum;
+
+		double error = o * (1 - o) * sum;
 		_hidden_err.push_back(error);
 	}
 
