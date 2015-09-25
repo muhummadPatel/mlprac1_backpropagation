@@ -33,7 +33,8 @@ mse_cutoff(mse_cutoff)
 	//you probably want to use an initializer list here
 {
 	//TODO
-	printf("PARAMS::: %d %d %d\n", inputLayerSize, hiddenLayerSize, outputLayerSize);
+	printf("NODES::: %d %d %d\n", inputLayerSize, hiddenLayerSize, outputLayerSize);
+	printf("LRATE::: %f MSECUTOFF::: %f\n", lRate, mse_cutoff);
 
 	//allocate space for input_to_hidden weights
 	for (uint i = 0; i < inputLayerSize; i++){
@@ -46,8 +47,8 @@ mse_cutoff(mse_cutoff)
 	}
 
 	initWeights(); //REMOOOOVVVEEEE
-	std::vector<double> temp = { 1, 1 }; //REMOOOOOVE
-	feedForward(temp); //REMOOOOOVE
+	//std::vector<double> temp = { 1, 1 }; //REMOOOOOVE
+	//feedForward(temp); //REMOOOOOVE
 }
 
 /**
@@ -169,7 +170,7 @@ void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput)
 		double o = _output[outputNode];
 		double t = desiredOutput[outputNode];
 
-		double error = o * (1 - o) * (t - o);
+		double error = o * (1.0 - o) * (t - o);
 		_output_err.push_back(error);
 	}
 
@@ -183,7 +184,7 @@ void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput)
 
 		double o = _hidden[hiddenNode];
 
-		double error = o * (1 - o) * sum;
+		double error = o * (1.0 - o) * sum;
 		_hidden_err.push_back(error);
 	}
 
@@ -192,7 +193,7 @@ void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput)
 	//	for each connection between the hidden and output layers
 	for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
 		for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
-			hidden_to_output[hiddenNode][outputNode] = lRate * _output_err[outputNode] * _hidden_err[hiddenNode];
+			hidden_to_output[hiddenNode][outputNode] += lRate * _output_err[outputNode] * _hidden_err[hiddenNode];
 		}
 	}
 
@@ -202,7 +203,7 @@ void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput)
 	//	for each connection between the input and hidden layers
 	for (uint inputNode = 0; inputNode < inputLayerSize; inputNode++) {
 		for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
-			input_to_hidden[inputNode][hiddenNode] = lRate * _hidden_err[hiddenNode] * _input[inputNode];
+			input_to_hidden[inputNode][hiddenNode] += lRate * _hidden_err[hiddenNode] * _input[inputNode];
 		}
 	}
 }
@@ -225,8 +226,9 @@ double CNeuralNet::meanSquaredError(const std::vector<double> desiredOutput){
 	double sum = 0;
 	for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
 		double err = desiredOutput[outputNode] - _output[outputNode];
+		sum += (err * err);
 	}
-
+	//printf("mseSum::: %f\n", sum);
 	return (sum / (double)outputLayerSize);
 }
 
@@ -241,6 +243,19 @@ until the MSE becomes suitably small
 void CNeuralNet::train(const std::vector<std::vector<double> > inputs,
 	const std::vector<std::vector<double> > outputs, uint trainingSetSize) {
 	//TODO
+	printf("TRAINING\n");
+	double error_sum = 0;
+	do {
+		error_sum = 0;
+
+		for (uint trainingExample = 0; trainingExample < trainingSetSize; trainingExample++) {
+			feedForward(inputs[trainingExample]);
+			propagateErrorBackward(outputs[trainingExample]);
+
+			error_sum += meanSquaredError(outputs[trainingExample]);
+		}
+		printf("Err:: %f %d\n", error_sum, trainingSetSize);
+	} while (error_sum > mse_cutoff);
 }
 
 /**
