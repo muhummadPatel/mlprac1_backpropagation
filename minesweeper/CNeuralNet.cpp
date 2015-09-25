@@ -188,8 +188,23 @@ void CNeuralNet::propagateErrorBackward(const std::vector<double> desiredOutput)
 	}
 
 	//TODO: adjust hidden_to_output weights
+	//3. Adjust the weights from the hidden to the output layer : learning rate * error at the output layer * error at the hidden layer
+	//	for each connection between the hidden and output layers
+	for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
+		for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
+			hidden_to_output[hiddenNode][outputNode] = lRate * _output_err[outputNode] * _hidden_err[hiddenNode];
+		}
+	}
+
 
 	//TODO: adjust input_to_hidden weights
+	//4. Adjust the weights from the input to the hidden layer : learning rate * error at the hidden layer * input layer node value
+	//	for each connection between the input and hidden layers
+	for (uint inputNode = 0; inputNode < inputLayerSize; inputNode++) {
+		for (uint hiddenNode = 0; hiddenNode < hiddenLayerSize; hiddenNode++) {
+			input_to_hidden[inputNode][hiddenNode] = lRate * _hidden_err[hiddenNode] * _input[inputNode];
+		}
+	}
 }
 
 /**
