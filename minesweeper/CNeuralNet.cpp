@@ -219,7 +219,15 @@ double CNeuralNet::meanSquaredError(const std::vector<double> desiredOutput){
 		sum <- sum + err*err
 	return sum / outputLayerSize
 	*/
-	return 1;
+	
+	/*return 1;*/
+
+	double sum = 0;
+	for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
+		double err = desiredOutput[outputNode] - _output[outputNode];
+	}
+
+	return (sum / (double)outputLayerSize);
 }
 
 /**
