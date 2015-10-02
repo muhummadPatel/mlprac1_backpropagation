@@ -54,42 +54,28 @@ void CBackPropController::InitializeLearningAlgorithm(void)
 		f >> learning_rate;
 		f >> mse_cutoff;
 
-		/*inp = new double*[no_training_samples];
-		out = new double*[no_training_samples];*/
 		for (uint32_t i = 0; i < no_training_samples; ++i){
-			/*inp[i] = new double[no_inputs];
-			out[i] = new double[no_out];*/
 			inp.push_back(std::vector<double>());
 			out.push_back(std::vector<double>());
 		}
 		for (uint32_t i = 0; i < no_training_samples; ++i){
 			printf("Reading file ... %f%%\n",i / float(no_training_samples)*100.0);
 			for (uint32_t inp_s = 0; inp_s < no_inputs; ++inp_s){
-				//f >> inp[i][inp_s];
 				double temp;
 				f >> temp;
 				inp[i].push_back(temp);
 			}
 			for (uint32_t out_s = 0; out_s < no_out; ++out_s){
-				//f >> out[i][out_s];
 				double temp;
 				f >> temp;
 				out[i].push_back(temp);
 			}
 		}
 		f.close();
+
 	//init the neural net and train it
 		_neuralnet = new CNeuralNet(no_inputs, no_hidden,no_out,learning_rate,mse_cutoff);
 		_neuralnet->train(inp, out, no_training_samples);
-	//release the memory we alloced
-		/*for (uint32_t i = 0; i < no_training_samples; ++i){
-			delete[] inp[i];
-			delete[] out[i];
-		}
-		delete[] inp;
-		delete[] out;
-*/
-
 }
 
 /**
@@ -121,7 +107,7 @@ bool CBackPropController::Update(void)
 		double dist_supermine = Vec2DLength(m_vecObjects[(*s)->getClosestSupermine()]->getPosition() - (*s)->Position());
 
 		//cheat a bit here... passing the distance into the neural net as well increases the search space dramatrically... :
-		std::vector<double> dots = { dot_mine, (dist_rock < 50 || dist_supermine < 50) ? ((dist_rock < dist_supermine) ? dot_rock : dot_supermine) : -1}; 
+		std::vector<double> dots = { dot_mine, (dist_rock < 25 || dist_supermine < 25) ? ((dist_rock < dist_supermine) ? dot_rock : dot_supermine) : -1}; 
 
 		if (_neuralnet->classify(dots) == 0){ // turn towards the mine
 			SPoint pt(m_vecObjects[(*s)->getClosestMine()]->getPosition().x,
