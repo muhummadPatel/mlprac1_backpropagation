@@ -268,7 +268,17 @@ uint CNeuralNet::classify(const std::vector<double> input){
 	//return 1; //TODO: fix me
 	feedForward(input);
 
-	return (_output[0] > _output[1]) ? 0 : 1;
+	double max_value = _output[0];
+	uint max_index = 0;
+
+	for (uint outputNode = 0; outputNode < outputLayerSize; outputNode++) {
+		if (_output[outputNode] > max_value) {
+			max_value = _output[outputNode];
+			max_index = outputNode;
+		}
+	}
+
+	return max_index;
 }
 
 /**
